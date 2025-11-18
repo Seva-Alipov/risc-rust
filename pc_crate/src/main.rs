@@ -1,9 +1,10 @@
 use std::env;
 use std::process::Stdio;
 use std::process::Command;
+
 fn main() {
     let mut args: Vec<String> = env::args().collect();
-    args[0] = "./build/compiler".to_string();
+    args[0] = "../build/compiler".to_string();
 
     if args.len() == 2 {
         args.push(args[1].replace(".rs", ".hex"));

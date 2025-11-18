@@ -14,11 +14,11 @@ module simple_memory (
 );
 
     // Assigning only the exact amount of memory needed
-    reg [31:0] memory [5:0];
+    reg [31:0] memory [255:0];
 
     // Initialize memory from firmware.hex
     initial begin
-        $readmemh("example.hex", memory);
+        $readmemh("firmware.hex", memory);
     end
 
     // Address decoding (word-aligned)

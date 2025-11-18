@@ -20,7 +20,10 @@
 #include <unistd.h>
 #include <stdint.h>
 #include <limits.h>
+
 #define WORD_LENGTH 4
+#define TOTAL_BYTES 1024
+#define TOTAL_WORDS TOTAL_BYTES/WORD_LENGTH
 
 static void die(const char *msg) { perror(msg); exit(errno); }
 
@@ -38,60 +41,77 @@ static void run(char *const argv[]) {
 
 int bin_to_wordhex(const char *bin_path, const char *hex_path) {
     FILE *in = fopen(bin_path, "rb");
-    if (!in) return -1;
+    if (!in) {
+        fprintf(stderr, "Error: could not open input file.\n");
+        return -1;
+    }
+
     FILE *out = fopen(hex_path, "w");
-    if (!out) { fclose(in); return -2; }
+    if (!out) {
+        fclose(in);
+        fprintf(stderr, "Error: could not open output file.\n");
+        return -2;
+    }
 
-    for (;;) {
-        uint8_t byte[WORD_LENGTH];
-        size_t len = fread(byte, sizeof(byte[0]), WORD_LENGTH, in);
-        if (len == 0) break;
+    uint8_t byte[WORD_LENGTH];
+    size_t words_written = 0;
 
-        // pad last partial word with 0x00
-        while (len < WORD_LENGTH) byte[len++] = 0;
+    while (words_written < TOTAL_WORDS) {
+        size_t len = fread(byte, 1, WORD_LENGTH, in);
 
-        // little-endian -> 32-bit word
-        uint32_t word = (uint32_t)byte[0]
-                   | ((uint32_t)byte[1] << 8)
-                   | ((uint32_t)byte[2] << 16)
-                   | ((uint32_t)byte[3] << 24);
+        if (len == 0) {
+            // End of file reached → stop reading and emit zeros
+            memset(byte, 0, WORD_LENGTH);
+        }
+        else if (len < WORD_LENGTH) {
+            // Partially read word → pad with zeros
+            for (size_t i = len; i < WORD_LENGTH; i++)
+                byte[i] = 0;
+        }
+
+        // Convert to little-endian 32-bit word
+        uint32_t word =  (uint32_t)byte[0]
+                      | ((uint32_t)byte[1] << 8)
+                      | ((uint32_t)byte[2] << 16)
+                      | ((uint32_t)byte[3] << 24);
 
         fprintf(out, "%08X\n", word);
+        words_written++;
+
+        // If we read a *full* word and the file still has more data
+        // after reaching the maximum size → file is too big
+        if (len == WORD_LENGTH && words_written == TOTAL_WORDS) {
+            // If there is more data in the file, print error
+            uint8_t extra;
+            if (fread(&extra, 1, 1, in) == 1) {
+                printf("The binary file is too long. You may still run it, but doing so may result in undefined behaviour.\n");
+            }
+        }
     }
+
     fclose(in);
     fclose(out);
     return 0;
 }
 
 int main(int argc, char **argv) {
-    if (argc != 3) {
+    /*if (argc != 3) {
         fprintf(stderr, "Usage: %s <input.rs> <output.bin>\n", argv[0]);
         return 1;
-    }
-    const char *in_rs = argv[1];
-    const char *out_hex = argv[2];
+    }*/
+    const char *out_hex = "../src_verilog/firmware.hex";
 
-    // Use a simple ELF path next to the bin (e.g., <output>.elf)
-    char out_elf[1024];
-    snprintf(out_elf, sizeof out_elf, "%s.elf", out_hex);
+    // Now with crate, elf is in same place always
+    const char *out_elf = "../rv32_crate/target/riscv32imac-unknown-none-elf/release/rv32_crate";
 
-    // 1) rustc → RV32I ELF (optimized for size, abort on panic)
-    char *rustc_argv[] = {
-        "rustc",
-        (char*)in_rs,
-        "--target=riscv32i-unknown-none-elf",
-        "-Copt-level=s",
-        "-Cpanic=abort",
-        "--emit=link",
-        // make the image link at 0x00000000:
-        "-Clink-arg=-Ttext=0x0",
-        "-Clink-arg=-Tdata=0x0",
-        "-Clink-arg=-Tbss=0x0",
-        "-o", out_elf,
+    char *cargo_argv[] = {
+        "cargo",
+        "build",
+        "--release",
         NULL
     };
 
-    run(rustc_argv);
+    run(cargo_argv);
 
     // 2) ELF -> Verilog plaintext HEX (GNU objcopy required)
     const char *objcopy = NULL;

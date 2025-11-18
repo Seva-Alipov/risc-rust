@@ -1,0 +1,23 @@
+[package]
+name = "rv32_crate"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+panic-halt = "1.0.0"
+riscv-rt = "0.16.0"
+
+[[bin]]
+name = "rv32_crate"
+path = "src/main.rs"
+test = false
+bench = false
+
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+panic = "abort"
+lto = "fat"
+opt-level = "s"
+codegen-units = 1

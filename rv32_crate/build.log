@@ -1,0 +1,81 @@
+       Fresh unicode-ident v1.0.22
+       Fresh proc-macro2 v1.0.103
+       Fresh riscv-target-parser v0.1.3
+       Fresh quote v1.0.42
+       Fresh critical-section v1.2.0
+       Fresh embedded-hal v1.0.0
+       Fresh riscv-pac v0.2.0
+       Fresh panic-halt v1.0.0
+       Fresh syn v2.0.110
+       Fresh paste v1.0.15
+       Fresh riscv-macros v0.3.0
+       Fresh riscv-rt-macros v0.6.0
+       Fresh riscv v0.15.0
+       Fresh riscv-rt v0.16.0
+   Compiling rv32_crate v0.1.0 (/home/seva/Documents/risc-rust/rv32_crate)
+     Running `CARGO=/home/seva/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo CARGO_BIN_NAME=rv32_crate CARGO_CRATE_NAME=rv32_crate CARGO_MANIFEST_DIR=/home/seva/Documents/risc-rust/rv32_crate CARGO_MANIFEST_PATH=/home/seva/Documents/risc-rust/rv32_crate/Cargo.toml CARGO_PKG_AUTHORS='' CARGO_PKG_DESCRIPTION='' CARGO_PKG_HOMEPAGE='' CARGO_PKG_LICENSE='' CARGO_PKG_LICENSE_FILE='' CARGO_PKG_NAME=rv32_crate CARGO_PKG_README='' CARGO_PKG_REPOSITORY='' CARGO_PKG_RUST_VERSION='' CARGO_PKG_VERSION=0.1.0 CARGO_PKG_VERSION_MAJOR=0 CARGO_PKG_VERSION_MINOR=1 CARGO_PKG_VERSION_PATCH=0 CARGO_PKG_VERSION_PRE='' CARGO_PRIMARY_PACKAGE=1 CARGO_SBOM_PATH='' LD_LIBRARY_PATH='/home/seva/Documents/risc-rust/rv32_crate/target/release/deps:/home/seva/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib' /home/seva/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc --crate-name rv32_crate --edition=2024 src/main.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --crate-type bin --emit=dep-info,link -C opt-level=s -C panic=abort -C lto=fat -C codegen-units=1 --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values())' -C metadata=9caf82a7322d993c -C extra-filename=-83464f462a2726f5 --out-dir /home/seva/Documents/risc-rust/rv32_crate/target/riscv32imac-unknown-none-elf/release/deps --target riscv32imac-unknown-none-elf -C strip=debuginfo -L dependency=/home/seva/Documents/risc-rust/rv32_crate/target/riscv32imac-unknown-none-elf/release/deps -L dependency=/home/seva/Documents/risc-rust/rv32_crate/target/release/deps --extern panic_halt=/home/seva/Documents/risc-rust/rv32_crate/target/riscv32imac-unknown-none-elf/release/deps/libpanic_halt-7eba1cfd80f4eb42.rlib --extern riscv_rt=/home/seva/Documents/risc-rust/rv32_crate/target/riscv32imac-unknown-none-elf/release/deps/libriscv_rt-425fa6e59deb29ff.rlib -L /home/seva/Documents/risc-rust/rv32_crate/target/riscv32imac-unknown-none-elf/release/build/riscv-rt-408ba7e5cbea4431/out`
+error: linking with `rust-lld` failed: exit status: 1
+  |
+  = note:  "rust-lld" "-flavor" "gnu" "<1 object files omitted>" "--as-needed" "-Bstatic" "<sysroot>/lib/rustlib/riscv32imac-unknown-none-elf/lib/libcompiler_builtins-*.rlib" "-L" "/tmp/rustcTnf9yS/raw-dylibs" "-Bdynamic" "-z" "noexecstack" "-L" "/home/seva/Documents/risc-rust/rv32_crate/target/riscv32imac-unknown-none-elf/release/build/riscv-rt-408ba7e5cbea4431/out" "-o" "/home/seva/Documents/risc-rust/rv32_crate/target/riscv32imac-unknown-none-elf/release/deps/rv32_crate-83464f462a2726f5" "--gc-sections" "--strip-debug"
+  = note: some arguments are omitted. use `--verbose` to show all linker arguments
+  = note: rust-lld: error: undefined symbol: _pre_init_trap
+          >>> referenced by rv32_crate.39a9a1f5e37a6f03-cgu.0
+          >>>               /home/seva/Documents/risc-rust/rv32_crate/target/riscv32imac-unknown-none-elf/release/deps/rv32_crate-83464f462a2726f5.rv32_crate.39a9a1f5e37a6f03-cgu.0.rcgu.o:(.init+0x14)
+          
+          rust-lld: error: undefined symbol: _max_hart_id
+          >>> referenced by rv32_crate.39a9a1f5e37a6f03-cgu.0
+          >>>               /home/seva/Documents/risc-rust/rv32_crate/target/riscv32imac-unknown-none-elf/release/deps/rv32_crate-83464f462a2726f5.rv32_crate.39a9a1f5e37a6f03-cgu.0.rcgu.o:(.init+0x20)
+          >>> referenced by rv32_crate.39a9a1f5e37a6f03-cgu.0
+          >>>               /home/seva/Documents/risc-rust/rv32_crate/target/riscv32imac-unknown-none-elf/release/deps/rv32_crate-83464f462a2726f5.rv32_crate.39a9a1f5e37a6f03-cgu.0.rcgu.o:(.init+0x24)
+          
+          rust-lld: error: undefined symbol: abort
+          >>> referenced by rv32_crate.39a9a1f5e37a6f03-cgu.0
+          >>>               /home/seva/Documents/risc-rust/rv32_crate/target/riscv32imac-unknown-none-elf/release/deps/rv32_crate-83464f462a2726f5.rv32_crate.39a9a1f5e37a6f03-cgu.0.rcgu.o:(.init+0x2c)
+          
+          rust-lld: error: undefined symbol: _hart_stack_size
+          >>> referenced by rv32_crate.39a9a1f5e37a6f03-cgu.0
+          >>>               /home/seva/Documents/risc-rust/rv32_crate/target/riscv32imac-unknown-none-elf/release/deps/rv32_crate-83464f462a2726f5.rv32_crate.39a9a1f5e37a6f03-cgu.0.rcgu.o:(.init+0x50)
+          >>> referenced by rv32_crate.39a9a1f5e37a6f03-cgu.0
+          >>>               /home/seva/Documents/risc-rust/rv32_crate/target/riscv32imac-unknown-none-elf/release/deps/rv32_crate-83464f462a2726f5.rv32_crate.39a9a1f5e37a6f03-cgu.0.rcgu.o:(.init+0x54)
+          
+          rust-lld: error: undefined symbol: _stack_start
+          >>> referenced by rv32_crate.39a9a1f5e37a6f03-cgu.0
+          >>>               /home/seva/Documents/risc-rust/rv32_crate/target/riscv32imac-unknown-none-elf/release/deps/rv32_crate-83464f462a2726f5.rv32_crate.39a9a1f5e37a6f03-cgu.0.rcgu.o:(.init+0x5c)
+          
+          rust-lld: error: undefined symbol: _mp_hook
+          >>> referenced by rv32_crate.39a9a1f5e37a6f03-cgu.0
+          >>>               /home/seva/Documents/risc-rust/rv32_crate/target/riscv32imac-unknown-none-elf/release/deps/rv32_crate-83464f462a2726f5.rv32_crate.39a9a1f5e37a6f03-cgu.0.rcgu.o:(.init+0x6c)
+          
+          rust-lld: error: undefined symbol: __sdata
+          >>> referenced by rv32_crate.39a9a1f5e37a6f03-cgu.0
+          >>>               /home/seva/Documents/risc-rust/rv32_crate/target/riscv32imac-unknown-none-elf/release/deps/rv32_crate-83464f462a2726f5.rv32_crate.39a9a1f5e37a6f03-cgu.0.rcgu.o:(.init+0x78)
+          
+          rust-lld: error: undefined symbol: __edata
+          >>> referenced by rv32_crate.39a9a1f5e37a6f03-cgu.0
+          >>>               /home/seva/Documents/risc-rust/rv32_crate/target/riscv32imac-unknown-none-elf/release/deps/rv32_crate-83464f462a2726f5.rv32_crate.39a9a1f5e37a6f03-cgu.0.rcgu.o:(.init+0x80)
+          
+          rust-lld: error: undefined symbol: __sidata
+          >>> referenced by rv32_crate.39a9a1f5e37a6f03-cgu.0
+          >>>               /home/seva/Documents/risc-rust/rv32_crate/target/riscv32imac-unknown-none-elf/release/deps/rv32_crate-83464f462a2726f5.rv32_crate.39a9a1f5e37a6f03-cgu.0.rcgu.o:(.init+0x88)
+          
+          rust-lld: error: undefined symbol: __sbss
+          >>> referenced by rv32_crate.39a9a1f5e37a6f03-cgu.0
+          >>>               /home/seva/Documents/risc-rust/rv32_crate/target/riscv32imac-unknown-none-elf/release/deps/rv32_crate-83464f462a2726f5.rv32_crate.39a9a1f5e37a6f03-cgu.0.rcgu.o:(.init+0xa8)
+          
+          rust-lld: error: undefined symbol: __ebss
+          >>> referenced by rv32_crate.39a9a1f5e37a6f03-cgu.0
+          >>>               /home/seva/Documents/risc-rust/rv32_crate/target/riscv32imac-unknown-none-elf/release/deps/rv32_crate-83464f462a2726f5.rv32_crate.39a9a1f5e37a6f03-cgu.0.rcgu.o:(.init+0xb0)
+          
+          rust-lld: error: undefined symbol: _setup_interrupts
+          >>> referenced by rv32_crate.39a9a1f5e37a6f03-cgu.0
+          >>>               /home/seva/Documents/risc-rust/rv32_crate/target/riscv32imac-unknown-none-elf/release/deps/rv32_crate-83464f462a2726f5.rv32_crate.39a9a1f5e37a6f03-cgu.0.rcgu.o:(_start_rust)
+          
+          rust-lld: error: undefined symbol: hal_main
+          >>> referenced by rv32_crate.39a9a1f5e37a6f03-cgu.0
+          >>>               /home/seva/Documents/risc-rust/rv32_crate/target/riscv32imac-unknown-none-elf/release/deps/rv32_crate-83464f462a2726f5.rv32_crate.39a9a1f5e37a6f03-cgu.0.rcgu.o:(_start_rust)
+          
+
+error: could not compile `rv32_crate` (bin "rv32_crate") due to 1 previous error
+
+Caused by:
+  process didn't exit successfully: `CARGO=/home/seva/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo CARGO_BIN_NAME=rv32_crate CARGO_CRATE_NAME=rv32_crate CARGO_MANIFEST_DIR=/home/seva/Documents/risc-rust/rv32_crate CARGO_MANIFEST_PATH=/home/seva/Documents/risc-rust/rv32_crate/Cargo.toml CARGO_PKG_AUTHORS='' CARGO_PKG_DESCRIPTION='' CARGO_PKG_HOMEPAGE='' CARGO_PKG_LICENSE='' CARGO_PKG_LICENSE_FILE='' CARGO_PKG_NAME=rv32_crate CARGO_PKG_README='' CARGO_PKG_REPOSITORY='' CARGO_PKG_RUST_VERSION='' CARGO_PKG_VERSION=0.1.0 CARGO_PKG_VERSION_MAJOR=0 CARGO_PKG_VERSION_MINOR=1 CARGO_PKG_VERSION_PATCH=0 CARGO_PKG_VERSION_PRE='' CARGO_PRIMARY_PACKAGE=1 CARGO_SBOM_PATH='' LD_LIBRARY_PATH='/home/seva/Documents/risc-rust/rv32_crate/target/release/deps:/home/seva/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib' /home/seva/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc --crate-name rv32_crate --edition=2024 src/main.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --crate-type bin --emit=dep-info,link -C opt-level=s -C panic=abort -C lto=fat -C codegen-units=1 --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values())' -C metadata=9caf82a7322d993c -C extra-filename=-83464f462a2726f5 --out-dir /home/seva/Documents/risc-rust/rv32_crate/target/riscv32imac-unknown-none-elf/release/deps --target riscv32imac-unknown-none-elf -C strip=debuginfo -L dependency=/home/seva/Documents/risc-rust/rv32_crate/target/riscv32imac-unknown-none-elf/release/deps -L dependency=/home/seva/Documents/risc-rust/rv32_crate/target/release/deps --extern panic_halt=/home/seva/Documents/risc-rust/rv32_crate/target/riscv32imac-unknown-none-elf/release/deps/libpanic_halt-7eba1cfd80f4eb42.rlib --extern riscv_rt=/home/seva/Documents/risc-rust/rv32_crate/target/riscv32imac-unknown-none-elf/release/deps/libriscv_rt-425fa6e59deb29ff.rlib -L /home/seva/Documents/risc-rust/rv32_crate/target/riscv32imac-unknown-none-elf/release/build/riscv-rt-408ba7e5cbea4431/out` (exit status: 1)
